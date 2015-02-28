@@ -1,78 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>ch.rasc</groupId>
+	<groupId>com.seven7.starter</groupId>
 	<artifactId>eds-starter</artifactId>
-	<version>1.0.0</version>
+	<version>0.0.1</version>
+	<packaging>war</packaging>
 
 	<prerequisites>
-		<maven>3.2.0</maven>
+		<maven>3.0.3</maven>
 	</prerequisites>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.2.0.RC1</version>
-	</parent>
+	<properties>
+		<spring.security.version>3.2.3.RELEASE</spring.security.version>
+		<java.version>1.7</java.version>
+		<hibernate.version>4.3.5.Final</hibernate.version>
+		<querydsl.version>3.3.2</querydsl.version>
 
-	<properties>		
-		<querydsl.version>3.5.1</querydsl.version>
-		<java.version>1.8</java.version>
-		
-		<ext.version>5.0.2.1552-NIGHTLY</ext.version>
+		<log4j.version>2.0-rc1</log4j.version>
+
+		<eds.version>1.4.1</eds.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.debug>true</maven.compiler.debug>
 
 		<maven.build.timestamp.format>yyyy-MM-dd'T'hh:mm:ss.SSSZ</maven.build.timestamp.format>
 		<build.timestamp>${maven.build.timestamp}</build.timestamp>
-
-		<start-class>ch.rasc.eds.starter.Application</start-class>
+		<extjs.version>4.2.2</extjs.version>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>rasc</id>
-			<url>https://repo.rasc.ch</url>
-		</repository>
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-		</pluginRepository>
-	</pluginRepositories>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-framework-bom</artifactId>
+				<version>4.0.3.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<groupId>ch.rasc</groupId>
+			<artifactId>edsutil</artifactId>
+			<version>1.0.13</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>xml-apis</artifactId>
@@ -82,20 +120,21 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.1.0.Final</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.sun.mail</groupId>
 			<artifactId>javax.mail</artifactId>
-			<version>1.5.2</version>
+			<version>1.5.1</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>activation</artifactId>
@@ -105,92 +144,176 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>3.11-beta2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
-			<version>3.11-beta2</version>
-		</dependency>
-
-		<dependency>
 			<groupId>com.mysema.querydsl</groupId>
 			<artifactId>querydsl-jpa</artifactId>
 			<version>${querydsl.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>asm</artifactId>
+					<groupId>asm</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>cglib</artifactId>
+					<groupId>cglib</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jsr305</artifactId>
+					<groupId>net.sourceforge.findbugs</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>hibernate-jpa-2.0-api</artifactId>
+					<groupId>org.hibernate.javax.persistence</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jsr305</artifactId>
+					<groupId>com.google.code.findbugs</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
+			<version>3.1.1</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>snakeyaml</artifactId>
+					<groupId>org.yaml</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.7.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-1.2-api</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-jcl</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<artifactId>commons-logging</artifactId>
+			<groupId>commons-logging</groupId>
+			<version>1.1.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.7</version>
 		</dependency>
 
 		<dependency>
 			<groupId>ch.ralscha</groupId>
 			<artifactId>extdirectspring</artifactId>
-			<version>1.5.0</version>
+			<version>${eds.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>ch.rasc</groupId>
-			<artifactId>edsutil</artifactId>
-			<version>2.0.5</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.3.2</version>
 		</dependency>
 
 		<dependency>
-			<groupId>ch.rasc</groupId>
-			<artifactId>extclassgenerator-annotations</artifactId>
-			<version>1.0.5</version>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>16.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.3.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.9</version>
 		</dependency>
 
 		<dependency>
 			<groupId>resources</groupId>
-			<artifactId>ext-all-debug</artifactId>
-			<version>${ext.version}</version>
+			<artifactId>extjs-gpl</artifactId>
+			<version>${extjs.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>resources</groupId>
+			<artifactId>extjs-gpl-ux</artifactId>
+			<version>${extjs.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>resources</groupId>
+			<artifactId>extjs-gpl-debug</artifactId>
+			<version>${extjs.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>resources</groupId>
-			<artifactId>ext-all</artifactId>
-			<version>${ext.version}</version>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.3</version>
 		</dependency>
 
 		<dependency>
-			<groupId>resources</groupId>
-			<artifactId>ext-ux</artifactId>
-			<version>${ext.version}</version>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.10-FINAL</version>
 		</dependency>
 
 		<dependency>
-			<groupId>resources</groupId>
-			<artifactId>ext-theme-crisp</artifactId>
-			<version>${ext.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>resources</groupId>
-			<artifactId>ext-sencha-charts</artifactId>
-			<version>${ext.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>resources</groupId>
-			<artifactId>ext-sencha-charts-theme-crisp</artifactId>
-			<version>${ext.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.10-FINAL</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>stax-api</artifactId>
+					<groupId>stax</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
 			<groupId>com.yahoo.platform.yui</groupId>
 			<artifactId>yuicompressor</artifactId>
-			<version>2.4.8</version>
+			<version>2.4.7</version>
 			<exclusions>
 				<exclusion>
 					<groupId>rhino</groupId>
@@ -202,7 +325,7 @@
 		<dependency>
 			<groupId>net.sf.uadetector</groupId>
 			<artifactId>uadetector-resources</artifactId>
-			<version>2014.10</version>
+			<version>2014.02</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>jsr305</artifactId>
@@ -212,41 +335,50 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.maxmind.geoip2</groupId>
-			<artifactId>geoip2</artifactId>
-			<version>2.1.0</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>google-http-client</artifactId>
-					<groupId>com.google.http-client</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>httpclient</artifactId>
-					<groupId>org.apache.httpcomponents</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>httpcore</artifactId>
-					<groupId>org.apache.httpcomponents</groupId>
-				</exclusion>
-			</exclusions>
+			<groupId>ch.rasc</groupId>
+			<artifactId>extclassgenerator-annotations</artifactId>
+			<version>1.0.2</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.ocpsoft.prettytime</groupId>
-			<artifactId>prettytime</artifactId>
-			<version>3.2.5.Final</version>
+			<groupId>ch.rasc</groupId>
+			<artifactId>embeddedtc</artifactId>
+			<version>1.13</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.3.176</version>
+			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>
+	<repositories>
+
+		<repository>
+			<id>rasc</id>
+			<name>My Private Repository</name>
+			<url>http://repository.rasc.ch</url>
+		</repository>
+
+	</repositories>
 
 	<build>
 
 		<resources>
 			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+
+			<resource>
 				<directory>src/main/resources</directory>
 				<excludes>
 					<exclude>version.properties</exclude>
-					<exclude>application.properties</exclude>
 				</excludes>
 			</resource>
 			<resource>
@@ -254,7 +386,6 @@
 				<filtering>true</filtering>
 				<includes>
 					<include>version.properties</include>
-					<include>application.properties</include>
 				</includes>
 			</resource>
 		</resources>
@@ -262,46 +393,27 @@
 		<plugins>
 
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<path>/</path>
+					<contextFile>${basedir}/src/main/config/tomcat.xml</contextFile>
+				</configuration>
 
-			<plugin>
-				<groupId>com.googlecode.jslint4java</groupId>
-				<artifactId>jslint4java-maven-plugin</artifactId>
-				<version>2.0.5</version>
-				<executions>
-					<execution>
-						<id>lint</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>lint</goal>
-						</goals>
-						<configuration>
-							<failOnError>false</failOnError>
-							<sourceFolders>
-								<sourceFolder>${project.basedir}/src/main/resources/static/app</sourceFolder>
-							</sourceFolders>
-
-							<options>
-								<browser>true</browser>
-								<sloppy>true</sloppy>
-								<white>true</white>
-								<vars>true</vars>
-								<unparam>true</unparam>
-								<plusplus>true</plusplus>
-								<predef>Ext,i18n,Starter,loggingEventService,appConfigurationService,accessLogService,
-									logService,userService,dummyService,console,printStackTrace,securityService</predef>
-							</options>
-						</configuration>
-					</execution>
-				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.h2database</groupId>
+						<artifactId>h2</artifactId>
+						<version>1.3.176</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 
 			<plugin>
 				<groupId>com.mysema.maven</groupId>
 				<artifactId>apt-maven-plugin</artifactId>
-				<version>1.1.2</version>
+				<version>1.1.1</version>
 				<executions>
 					<execution>
 						<id>jpa</id>
@@ -309,23 +421,21 @@
 							<goal>process</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${project.basedir}/target/generated-sources/java</outputDirectory>
+							<outputDirectory>target/generated-sources/java</outputDirectory>
 							<processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>
 						</configuration>
 					</execution>
 					<execution>
 						<id>modelgen</id>
-						<phase>compile</phase>
 						<goals>
 							<goal>process</goal>
 						</goals>
 						<configuration>
 							<processor>ch.rasc.extclassgenerator.ModelAnnotationProcessor</processor>
-							<outputDirectory>${project.basedir}/src/main/resources/static/app</outputDirectory>
+							<outputDirectory>src/main/webapp/app</outputDirectory>
 							<options>
 								<debug>true</debug>
-								<outputFormat>extjs5</outputFormat>
-								<includeValidation>builtin</includeValidation>
+								<outputFormat>extjs4</outputFormat>
 								<surroundApiWithQuotes>true</surroundApiWithQuotes>
 							</options>
 						</configuration>
@@ -346,13 +456,129 @@
 					<dependency>
 						<groupId>ch.rasc</groupId>
 						<artifactId>extclassgenerator</artifactId>
-						<version>1.0.5</version>
+						<version>1.0.2</version>
 					</dependency>
 				</dependencies>
 			</plugin>
 
-		</plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.17</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.5</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.1</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.5.1</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.3</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${project.build.directory}/generated-sources/java/</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<packagingExcludes>WEB-INF/classes/StartTomcat*</packagingExcludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>com.googlecode.jslint4java</groupId>
+				<artifactId>jslint4java-maven-plugin</artifactId>
+				<version>2.0.5</version>
+				<executions>
+					<execution>
+						<id>lint</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>lint</goal>
+						</goals>
+						<configuration>
+							<failOnError>false</failOnError>
+							<sourceFolders>
+								<sourceFolder>${project.basedir}/src/main/webapp</sourceFolder>
+							</sourceFolders>
+
+							<excludes>
+								<exclude>resources/deft.js</exclude>
+								<exclude>resources/deft-debug.js</exclude>
+								<exclude>resources/extjs.history.js</exclude>
+								<exclude>resources/detect.js</exclude>
+								<exclude>resources/customtheme/*</exclude>
+								<exclude>app/ux/window/Notification.js</exclude>
+							</excludes>
+
+							<options>
+								<browser>true</browser>
+								<sloppy>true</sloppy>
+								<white>true</white>
+								<vars>true</vars>
+								<plusplus>true</plusplus>
+								<unparam>true</unparam>
+								<predef>Ext,App,REMOTING_API,POLLING_URLS,History,Deft,i18n,accessLogService,userService,logService,
+									logEventService,navigationService,securityService,appConfigurationService</predef>
+							</options>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
 	</build>
 
 </project>
